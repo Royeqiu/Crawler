@@ -15,5 +15,6 @@ public class Main {
         BasicSearcgEngineResultUrlFetcher urlFetcher= new YahooAnswerResultWebUrlFetcher();
         urlFetcher.getSearchEngineResult("https://answers.search.yahoo.com/search?b=11&p=wine");
         urlFetcher.parseSearchEngineResult();
+        int i=0;
     }
 }
