@@ -24,9 +24,27 @@ public class urlTable {
     {
         return nextUrlSet;
     }
-
+    public String getFirstNextUrl()
+    {
+        if(!nextUrlSet.isEmpty())
+        {
+            return nextUrlSet.get(0);
+        }
+        else return null;
+    }
+    public void removeFirstNextUrl()
+    {
+        if(!nextUrlSet.isEmpty())
+        {
+            nextUrlSet.remove(0);
+        }
+        else return;
+    }
     public void addNextUrl(String nextUrl)
     {
-        nextUrlSet.add(nextUrl);
+        if(!visitedUrlSet.contains(nextUrl))
+        {
+            nextUrlSet.add(nextUrl);
+        }
     }
 }
