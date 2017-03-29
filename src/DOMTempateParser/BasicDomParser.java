@@ -1,5 +1,6 @@
 package DOMTempateParser;
 
+import model.WebPageContent;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -22,5 +23,5 @@ abstract public class BasicDomParser {
             e.printStackTrace();
         }
     }
-
+    public abstract WebPageContent parseWebContent();
 }

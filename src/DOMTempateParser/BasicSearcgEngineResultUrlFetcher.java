@@ -25,4 +25,5 @@ abstract public class BasicSearcgEngineResultUrlFetcher {
         }
     }
     abstract public ArrayList<String> parseSearchEngineResult();
+    abstract public ArrayList<String> parseNextSearchEngineResultPage();
 }
