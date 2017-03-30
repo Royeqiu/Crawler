@@ -1,34 +1,41 @@
 package main;
 
 import DOMTempateParser.BasicDomParser;
-import DOMTempateParser.BasicSearcgEngineResultUrlFetcher;
 import DOMTempateParser.YahooAnswerDomParser;
 import DOMTempateParser.YahooAnswerResultWebUrlFetcher;
 import DOMTempateParser.httpUtil.HTTPCommonUtil;
+import model.WebPageContent;
 import websiteProcess.UrlTable;
 import websiteProcess.UrlTableController;
-import websiteProcess.WebPageFileWriter;
+
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 
 public class MultiThreadCrawler {
 
     static UrlTableController urlTableController;
-    static WebPageFileWriter webPageFileWriter;
+
 
     public static void main(String[] args) {
         HTTPCommonUtil.trustEveryone();
-        webPageFileWriter =new WebPageFileWriter();
+        Executor executor = Executors.newFixedThreadPool(8);
+
         urlTableController =new UrlTableController(new UrlTable());
-        BasicSearcgEngineResultUrlFetcher urlFetcher= new YahooAnswerResultWebUrlFetcher();
-        BasicDomParser webContentFetcher=new YahooAnswerDomParser();
-        urlFetcher.getSearchEngineResult("https://answers.search.yahoo.com/search?p=wine&b=11");
-        urlTableController.addNextUrlIntoUrlTable(urlFetcher.parseSearchEngineResult());
-        System.out.println(urlTableController.getUrlTable().getFirstNextUrl());
-        urlTableController.addNextSearchEnginePageUrlIntoUrlTable(urlFetcher.parseNextSearchEngineResultPage());
-        //System.out.println(urlTableController.getUrlTable().getFirstNextSearchEngineUrl());
-        webContentFetcher.getWebContent(urlTableController.getNextUrl());
-        webPageFileWriter.setWebContent(webContentFetcher.parseWebContent());
-        webPageFileWriter.writeWebPage("1",0);
+
+        executor.execute(new YahooAnswerResultWebUrlFetcher("https://answers.search.yahoo.com/search?p=wine&b=11",urlTableController));
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        executor.execute(new YahooAnswerDomParser(urlTableController,1));
+        executor.execute(new YahooAnswerDomParser(urlTableController,2));
+        executor.execute(new YahooAnswerDomParser(urlTableController,3));
+        executor.execute(new YahooAnswerDomParser(urlTableController,4));
+        executor.execute(new YahooAnswerDomParser(urlTableController,5));
+        executor.execute(new YahooAnswerDomParser(urlTableController,6));
+
     }
 
 }

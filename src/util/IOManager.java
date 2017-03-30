@@ -97,6 +97,7 @@ public class IOManager {
 		try {
 			bw=new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file,true),"UTF-8"));
 			bw.write(string+"\r\n");
+			bw.flush();
 			bw.close();
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block

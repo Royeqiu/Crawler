@@ -28,6 +28,15 @@ public class UrlTable {
     {
         return nextUrlSet;
     }
+
+    public Set<String> getVisitedSearchEnginePageUrlSet()
+    {
+        return visitedSearchEnginePageUrlSet;
+    }
+    public ArrayList<String> getNextSearchEnginePageUrlSet()
+    {
+        return nextSearchEnginePageUrlSet;
+    }
     public String getFirstNextSearchEngineUrl()
     {
         if(!nextSearchEnginePageUrlSet.isEmpty())
@@ -62,16 +71,17 @@ public class UrlTable {
     }
     public void addNextUrl(String nextUrl)
     {
-        if(!visitedUrlSet.contains(nextUrl))
+        if(!visitedUrlSet.contains(nextUrl)&&!nextUrlSet.contains(nextUrl))
         {
             nextUrlSet.add(nextUrl);
         }
     }
     public void addNextSearchEnginePageUrl(String nextSearchEnginePageUrl)
     {
-        if(!visitedSearchEnginePageUrlSet.contains(nextSearchEnginePageUrl))
+        if(!visitedSearchEnginePageUrlSet.contains(nextSearchEnginePageUrl)&&!nextSearchEnginePageUrlSet.contains(nextSearchEnginePageUrl))
         {
             nextSearchEnginePageUrlSet.add(nextSearchEnginePageUrl);
+
         }
     }
     public void addVisitedUrl(String visitedUrl)

@@ -3,7 +3,7 @@ package model;
 /**
  * Created by roye on 2017/3/29.
  */
-public class WebPageContent {
+    public abstract class WebPageContent {
     public String getTitle() {
         return title;
     }

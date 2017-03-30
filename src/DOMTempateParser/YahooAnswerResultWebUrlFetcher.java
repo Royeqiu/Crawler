@@ -2,15 +2,24 @@ package DOMTempateParser;
 
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import websiteProcess.UrlTableController;
 
 import java.util.ArrayList;
+
+import static sun.management.snmp.jvminstr.JvmThreadInstanceEntryImpl.ThreadStateMap.Byte0.runnable;
 
 /**
  * Created by roye on 2017/3/28.
  */
-public class YahooAnswerResultWebUrlFetcher extends BasicSearcgEngineResultUrlFetcher {
+public class YahooAnswerResultWebUrlFetcher extends BasicSearcgEngineResultUrlFetcher implements Runnable{
 
 
+
+    public YahooAnswerResultWebUrlFetcher(String initUrl, UrlTableController urlTableController)
+    {
+        super(initUrl,urlTableController);
+
+    }
     @Override
     public ArrayList<String> parseSearchEngineResult() {
         Elements searchResultElements;
@@ -42,5 +51,26 @@ public class YahooAnswerResultWebUrlFetcher extends BasicSearcgEngineResultUrlFe
 
         }
         return nextSearchEngineUrlResultPage;
+    }
+
+    @Override
+    public void run() {
+
+        getSearchEngineResult(initUrl);
+        urlTableController.addNextSearchEnginePageUrlIntoUrlTable(parseNextSearchEngineResultPage());
+        urlTableController.addNextUrlIntoUrlTable(parseSearchEngineResult());
+        System.out.println("UrlFetcher is ready!");
+        while(true)
+        {
+            if(!urlTableController.getUrlTable().getNextSearchEnginePageUrlSet().isEmpty())
+            {
+                getSearchEngineResult(urlTableController.getNextSearchEnginePageUrl());
+                urlTableController.addNextSearchEnginePageUrlIntoUrlTable(parseNextSearchEngineResultPage());
+                urlTableController.addNextUrlIntoUrlTable(parseSearchEngineResult());
+            }
+
+        }
+
+
     }
 }

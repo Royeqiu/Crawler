@@ -3,15 +3,23 @@ package DOMTempateParser;
 import model.WebPageContent;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import websiteProcess.UrlTableController;
+import websiteProcess.WebPageFileWriter;
 
 import java.io.IOException;
 
 /**
  * Created by roye on 2017/3/27.
  */
-abstract public class BasicDomParser {
+abstract public class BasicDomParser implements Runnable{
     protected Document webContent;
-
+    protected WebPageFileWriter webPageFileWriter;
+    protected UrlTableController urlTableController;
+    public BasicDomParser(UrlTableController urlTableController)
+    {
+        this.urlTableController=urlTableController;
+        webPageFileWriter=new WebPageFileWriter();
+    }
     public void getWebContent(String Url) {
         try {
             webContent= Jsoup.connect(Url)

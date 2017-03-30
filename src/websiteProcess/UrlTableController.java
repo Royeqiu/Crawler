@@ -31,10 +31,6 @@ public class UrlTableController {
     }
     public void addNextSearchEnginePageUrlIntoUrlTable(ArrayList<String> nextSearchEnginePageUrlSet)
     {
-        if(UrlTable ==null)
-        {
-            UrlTable =new UrlTable();
-        }
         for(String nextSearchEnginePageUrl:nextSearchEnginePageUrlSet)
         {
             UrlTable.addNextSearchEnginePageUrl(nextSearchEnginePageUrl);

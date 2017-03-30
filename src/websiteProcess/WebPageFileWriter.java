@@ -29,5 +29,6 @@ public class WebPageFileWriter {
             io.writeLine(webContent.getBestAnswer());
         }
 
+
     }
 }
